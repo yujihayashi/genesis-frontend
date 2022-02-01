@@ -8,20 +8,68 @@
     <title>
         <%= htmlWebpackPlugin.options.title %>
     </title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;600;700&display=swap"
+        rel="stylesheet">
 </head>
 
 <body>
+    <template id="user-item">
+        <li>
+            <div class="col col__data">
+                <h2></h2>
+                <div class="data__row">
+
+                </div>
+            </div>
+            <div class="col col__actions">
+                <button type="button" class="btn btn__remove">Excluir</button>
+            </div>
+        </li>
+    </template>
+    <template id="user-item-data-col">
+        <div class="data__col">
+            <h3></h3>
+            <p></p>
+        </div>
+    </template>
     <div id="app">
         <div class="container">
-            <form id="user-input" class="form">
-                <div class="form__container">
-                    <input-field class="hi" data-variable="name" data-type="text" data-placeholder="Nome completo"></input-field>
-                    <input-field data-variable="cpf" data-type="tel" data-placeholder="CPF"></input-field>
-                    <input-field data-variable="phone" data-type="tel" data-placeholder="Telefone"></input-field>
-                    <input-field data-variable="email" data-type="email" data-placeholder="E-mail"></input-field>
+            <header class="page__header">
+                <h1 class="page__title">Listagem de usuários</h1>
+                <div class="page__actions">
+                    <button id="user-add" type="button" class="btn btn__add">Criar usuário</button>
                 </div>
-                <button type="submit" class="btn__submit">Cadastrar</button>
-            </form>
+            </header>
+            <p id="data-counter" class="page__counter"></p>
+            <ul id="user-list" class="user__list">
+
+            </ul>
+            <div class="modal" id="user-modal">
+                <div class="modal__container">
+                    <button type="button" class="modal__close" title="Clique para fechar a janela">x</button>
+                    <h2 class="modal__title">Cadastrar novo usuário</h2>
+                    <form id="user-input" class="form">
+                        <div class="form__container">
+                            <div class="field__group">
+                                <input type="text" class="field__input" name="name" id="name"
+                                    placeholder="Nome completo">
+                            </div>
+                            <div class="field__group">
+                                <input type="text" class="field__input" name="cpf" id="cpf" placeholder="CPF">
+                            </div>
+                            <div class="field__group">
+                                <input type="text" class="field__input" name="phone" id="phone" placeholder="Telefone">
+                            </div>
+                            <div class="field__group">
+                                <input type="text" class="field__input" name="email" id="email" placeholder="E-mail">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn__submit" id="submit-button">Cadastrar</button>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </body>

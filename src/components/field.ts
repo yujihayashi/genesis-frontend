@@ -15,8 +15,7 @@ export default class Field extends HTMLElement {
 
         fieldGroup.appendChild(fieldInput)
 
-        shadow.appendChild(this.styles())
-        shadow.appendChild(fieldGroup);
+        shadow.append(this.styles(), fieldGroup)
     }
 
     styles() {
