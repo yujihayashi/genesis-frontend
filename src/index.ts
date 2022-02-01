@@ -1,7 +1,7 @@
-import '../styles/app.scss'
-import Loading from '../components/loading';
-import { formatCPF, formatPhoneNumber } from '../helpers/format';
-import DataCounter from '../components/data-counter';
+import './styles/app.scss'
+import Loading from './components/loading';
+import { formatCPF, formatPhoneNumber } from './helpers/format';
+import DataCounter from './components/data-counter';
 
 class UserInput {
     formEl: HTMLFormElement
