@@ -1,29 +1,49 @@
-import { FieldInterface } from "../config/types";
+export default class Field extends HTMLElement {
+    constructor() {
+        super();
+        const shadow = this.attachShadow({ mode: 'open' });
 
-export default function Field(field: FieldInterface) {
+        const fieldGroup = document.createElement('div');
+        const fieldInput = document.createElement('input');
 
-    const fieldGroup = document.createElement('div');
-    const fieldInput = document.createElement('input');
+        fieldGroup.classList.add('field__group')
 
-    fieldGroup.classList.add('field__group')
+        fieldInput.classList.add('field__input');
+        fieldInput.setAttribute("name", this.getAttribute('data-variable')!)
+        fieldInput.setAttribute("type", this.getAttribute('data-type')!)
+        fieldInput.setAttribute("placeholder", this.getAttribute('data-placeholder')!)
 
-    if (field.label) {
-        const fieldLabel = document.createElement('label');
+        fieldGroup.appendChild(fieldInput)
 
-        fieldLabel.innerHTML = field.label;
-        fieldLabel.classList.add('field__label');
-
-        fieldGroup.appendChild(fieldLabel)
+        shadow.appendChild(this.styles())
+        shadow.appendChild(fieldGroup);
     }
 
-    fieldInput.classList.add('field__input');
-    fieldInput.setAttribute("name", field.variable)
-    fieldInput.setAttribute("type", field.type)
-    if (field.placeholder)
-        fieldInput.setAttribute("placeholder", field.placeholder)
+    styles() {
+        const style = document.createElement('style');
 
-    fieldGroup.appendChild(fieldInput)
+        style.textContent = `
+        .field__group {
+            margin-bottom: 1.5rem;
+        }
 
+        .field__label {
+            display: block;
+            margin-bottom: 2px;
+        }
+    
+        .field__input {
+            width: 100%;
+            border: none;
+            border-bottom: 1px solid #efeeed;
+            padding: 10px 0;
+        }
+    
+        .field__input:focus {
+            outline: none;
+        }
+        `
 
-    return fieldGroup;
+        return style;
+    }
 }
