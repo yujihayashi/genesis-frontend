@@ -50,20 +50,20 @@
                 <div class="modal__container">
                     <button type="button" class="modal__close" title="Clique para fechar a janela">x</button>
                     <h2 class="modal__title">Cadastrar novo usuário</h2>
-                    <form id="user-input" class="form">
+                    <form id="user-input" class="form" novalidate>
                         <div class="form__container">
                             <div class="field__group">
                                 <input type="text" class="field__input" name="name" id="name"
-                                    placeholder="Nome completo">
+                                    placeholder="Nome completo" required>
                             </div>
                             <div class="field__group">
-                                <input type="text" class="field__input" name="cpf" id="cpf" placeholder="CPF">
+                                <input type="tel" class="field__input" name="cpf" id="cpf" placeholder="CPF" required>
                             </div>
                             <div class="field__group">
-                                <input type="text" class="field__input" name="phone" id="phone" placeholder="Telefone">
+                                <input type="tel" class="field__input" name="phone" id="phone" placeholder="Telefone" required>
                             </div>
                             <div class="field__group">
-                                <input type="text" class="field__input" name="email" id="email" placeholder="E-mail">
+                                <input type="email" class="field__input" name="email" id="email" placeholder="E-mail" required>
                             </div>
                         </div>
                         <button type="submit" class="btn btn__submit" id="submit-button">Cadastrar</button>

@@ -104,24 +104,41 @@ button {
     }
 }
 
-.field__group {
-    margin-bottom: 1.5rem;
+.field {
+    &__group {
+        margin-bottom: 1.5rem;
+    }   
+
+    &__label {
+        display: block;
+        margin-bottom: 2px;
+    }
+
+    &__input {
+        width: 100%;
+        border: none;
+        border-bottom: 1px solid #efeeed;
+        padding: 10px 0;
+
+        &:focus {
+            outline: none;
+        }
+
+    }
 }
 
-.field__label {
-    display: block;
-    margin-bottom: 2px;
+.was-validated {
+    .field__input {
+        &:invalid {
+            border-bottom-color: var(--red);
+        }
+    }
 }
 
-.field__input {
-    width: 100%;
-    border: none;
-    border-bottom: 1px solid #efeeed;
-    padding: 10px 0;
-}
-
-.field__input:focus {
-    outline: none;
+.error {
+    color: var(--red);
+    font-size: 0.8rem;
+    margin-top: 4px;
 }
 
 .user {
@@ -177,6 +194,13 @@ button {
         width: 22px;
         height: 22px;
         display: inline-flex;
+    }
+
+    &__primary {
+        i {
+            border-color: var(--primary);
+            border-top-color: transparent;
+        }
     }
 }
 
