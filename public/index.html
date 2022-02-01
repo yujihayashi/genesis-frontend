@@ -1,12 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= htmlWebpackPlugin.options.title %></title>
+    <title>
+        <%= htmlWebpackPlugin.options.title %>
+    </title>
 </head>
+
 <body>
-    <div id="app"></div>
+    <div id="app">
+        <div class="container">
+            <form id="user-input" class="form">
+                <div class="form__container">
+                    <input-field class="hi" data-variable="name" data-type="text" data-placeholder="Nome completo"></input-field>
+                    <input-field data-variable="cpf" data-type="tel" data-placeholder="CPF"></input-field>
+                    <input-field data-variable="phone" data-type="tel" data-placeholder="Telefone"></input-field>
+                    <input-field data-variable="email" data-type="email" data-placeholder="E-mail"></input-field>
+                </div>
+                <button type="submit" class="btn__submit">Cadastrar</button>
+            </form>
+        </div>
+    </div>
 </body>
+
 </html>

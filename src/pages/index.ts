@@ -1,6 +1,5 @@
 import '../styles/app.scss'
 import Field from '../components/field';
-import Button from '../components/button';
 
 const fields = [
     {
@@ -25,24 +24,47 @@ const fields = [
     },
 ]
 
-function component() {
-    const container = document.createElement('div')
-    const form = document.createElement('form')
-    const formContainer = document.createElement('div')
+class UserInput {
+    formEl: HTMLFormElement
 
-    formContainer.classList.add('form__container')
+    constructor() {
+        this.formEl = document.getElementById('user-input') as HTMLFormElement
+        this.configure();
+    }
 
-    fields.forEach(f => formContainer.appendChild(Field(f)))
+    configure() {
+        this.formEl.addEventListener('submit', this.submitHandler);
+    }
 
-    form.classList.add('form')
-    form.appendChild(formContainer)
-    form.appendChild(Button())
-
-
-    container.classList.add('container')
-    container.appendChild(form)
-
-    return container;
+    private submitHandler(event: Event) {
+        event.preventDefault();
+    }
 }
 
-document.body.appendChild(component());
+
+
+// function component() {
+//     const container = document.createElement('div')
+//     const form = document.createElement('form')
+//     const formContainer = document.createElement('div')
+
+//     formContainer.classList.add('form__container')
+
+//     fields.forEach(f => formContainer.appendChild(Field(f)))
+
+//     form.classList.add('form')
+//     form.appendChild(formContainer)
+//     form.appendChild(Button())
+
+
+//     container.classList.add('container')
+//     container.appendChild(form)
+
+//     return container;
+// }
+
+new UserInput();
+
+customElements.define('input-field', Field);
+
+// document.body.appendChild(component());
