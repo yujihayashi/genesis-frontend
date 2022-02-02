@@ -1,4 +1,5 @@
 import { UserInterface } from "../config/types";
+import Store from "./store";
 
 
 export function validate(obj: UserInterface) {
@@ -15,9 +16,12 @@ export function validate(obj: UserInterface) {
     return validatedObj;
 }
 
+// validate the cpf value for the brazilian document
 export function validateCPF(strCPF: string) {
     const msg = "CPF inválido";
     const numbers = strCPF.split('');
+    const store = new Store;
+    const { users } = store;
     if (strCPF.length < 11) return "CPF deve ter 11 dígitos";
     if (strCPF.length > 11) return "CPF não deve ter mais de 11 dígitos";
     if (numbers.filter(i => i === numbers[0]).length === 11) {
@@ -40,10 +44,15 @@ export function validateCPF(strCPF: string) {
 
     if ((Resto === 10) || (Resto === 11)) Resto = 0;
     if (Resto !== parseInt(strCPF.substring(10, 11))) return msg;
-    return "";
+
+    // verify if the cpf value alredy exists
+    if (users?.length > 0 && users.find(u => u.cpf === strCPF)) return "CPF já cadastrado"
+        return "";
 }
 
+// validate the phone number for brazilian formats (mobile and landline)
 export function validatePhone(value: string) {
+    console.log(value)
     var re = /(.)\1{8}/g;
     var ddd = value.substring(0, 2);
     var firstPhoneNumber = value.substring(2, 3);
@@ -66,9 +75,8 @@ export function validatePhone(value: string) {
 
 export function validateEmail(email: string) {
     const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    if (!re.test(String(email).toLowerCase())) {
-        return "E-mail inválido";
-    }
+    if (!re.test(String(email).toLowerCase())) return "E-mail inválido";
+    
     return "";
 }
 

@@ -1,6 +1,7 @@
 export function formatPhoneNumber(str: string) {
     var cleaned = ('' + str).replace(/\D/g, ''); // remove all spaces
-    var match = cleaned.match(/^(\d{2})(\d{5})(\d{4})$/);
+    // match for phone numbers with 11 or 10 numbers
+    var match = cleaned.match(/^(\d{2})(\d{5})(\d{4})$/) || cleaned.match(/^(\d{2})(\d{4})(\d{4})$/);
     if (match) {
         return `(${match[1]}) ${match[2]}-${match[3]}`
     }

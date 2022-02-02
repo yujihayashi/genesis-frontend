@@ -74,19 +74,6 @@ button {
     }
 }
 
-.data {
-    &__row {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 2rem;
-    }
-
-    &__col {
-        line-height: 0;
-        flex-grow: 1;
-    }
-}
-
 .form {
     display: flex;
     flex-direction: column;
@@ -165,9 +152,24 @@ button {
             border-bottom: 1px solid var(--gray-lighter);
         }
 
+        .data {
+            &__row {
+                display: flex;
+                flex-wrap: no-wrap;
+                gap: 2rem;
+            }
+
+            &__col {
+                line-height: 0;
+                flex-grow: 1;
+                width: 33.33333333333333%;
+            }
+        }
+
         .col {
             &__data {
                 flex-grow: 1;
+                
             }
 
             &__actions {
@@ -288,6 +290,19 @@ button {
     .form {
         &__container {
             > * {
+                width: 100%;
+            }
+        }
+    }
+
+    .user__list {
+        .data {
+            &__row {
+                flex-wrap: wrap;
+                gap: 0.5rem;
+            }
+
+            &__col {
                 width: 100%;
             }
         }
