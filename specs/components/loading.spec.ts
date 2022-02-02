@@ -13,4 +13,12 @@ describe('Loading component', () => {
         expect(icon).toBeTruthy()
     })
 
+    test('to add the loading__primary classname with the prop isPrimary', () => {
+        const element = Loading(true);
+
+        // expecting the loading__primary classname on the span tag
+        expect(element.classList).toContain('loading__primary')
+
+    })
+
 })
