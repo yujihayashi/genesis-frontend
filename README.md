@@ -4,6 +4,10 @@
 ## Typescript
 O projeto utiliza o [TypeScript](https://www.typescriptlang.org/) pensando no crescimento, na manutenção e na agilidade do mesmo para desenvolver e validar sem precisar rodar.
 
+## Cypress
+
+## JEST
+
 # Instalação e rodando o projeto
 
 Primeiramente, utilizando o terminal, instale as dependências:
