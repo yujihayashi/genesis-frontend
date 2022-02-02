@@ -1,12 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= htmlWebpackPlugin.options.title %></title>
+    <title>
+        <%= htmlWebpackPlugin.options.title %>
+    </title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;600;700&display=swap"
+        rel="stylesheet">
 </head>
+
 <body>
-    <div id="app"></div>
+    <template id="user-item">
+        <li>
+            <div class="col col__data">
+                <h2></h2>
+                <div class="data__row">
+
+                </div>
+            </div>
+            <div class="col col__actions">
+                <button type="button" class="btn btn__remove">Excluir</button>
+            </div>
+        </li>
+    </template>
+    <template id="user-item-data-col">
+        <div class="data__col">
+            <h3></h3>
+            <p></p>
+        </div>
+    </template>
+    <div id="app">
+        <div class="container">
+            <header class="page__header">
+                <h1 class="page__title">Listagem de usuários</h1>
+                <div class="page__actions">
+                    <button id="user-add" type="button" class="btn btn__add">Criar usuário</button>
+                </div>
+            </header>
+            <p id="data-counter" class="page__counter"></p>
+            <ul id="user-list" class="user__list">
+
+            </ul>
+            <div class="modal" id="user-modal">
+                <div class="modal__container">
+                    <button type="button" class="modal__close" title="Clique para fechar a janela">x</button>
+                    <h2 class="modal__title">Cadastrar novo usuário</h2>
+                    <form id="user-input" class="form" novalidate>
+                        <div class="form__container">
+                            <div class="field__group">
+                                <input type="text" class="field__input" name="name" id="name"
+                                    placeholder="Nome completo" required>
+                            </div>
+                            <div class="field__group">
+                                <input type="tel" class="field__input" name="cpf" id="cpf" placeholder="CPF" required>
+                            </div>
+                            <div class="field__group">
+                                <input type="tel" class="field__input" name="phone" id="phone" placeholder="Telefone" required>
+                            </div>
+                            <div class="field__group">
+                                <input type="email" class="field__input" name="email" id="email" placeholder="E-mail" required>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn__submit" id="submit-button">Cadastrar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
+
 </html>

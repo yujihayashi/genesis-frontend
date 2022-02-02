@@ -4,8 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
     mode: 'development',
     entry: {
-        index: './src/pages/index.ts',
-        list: './src/pages/list.ts'
+        index: './src/index.ts',
     },
     devServer: {
         static: './dist',
@@ -13,14 +12,8 @@ module.exports = {
     plugins: [
         new HtmlWebpackPlugin({
             template: './public/index.html',
-            title: "Form - Yuji Hayashi - Genesis",
+            title: "Yuji Hayashi - Genesis",
             chunks: ['index']
-        }),
-        new HtmlWebpackPlugin({
-            filename: "list.html",
-            title: "List - Yuji Hayashi - Genesis",
-            template: './public/index.html',
-            chunks: ['list']
         }),
     ],
     module: {
@@ -30,7 +23,14 @@ module.exports = {
                 use: [
                     'style-loader',
                     'css-loader',
-                    'sass-loader'
+                    {
+                        loader:'sass-loader',
+                        options: { 
+                          sassOptions:{
+                            includePaths: [path.resolve(__dirname, 'node_modules')]
+                          }
+                        }
+                      }
                 ]
             },
             {
