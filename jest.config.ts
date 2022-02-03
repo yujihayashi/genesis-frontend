@@ -1,4 +1,5 @@
-module.exports = { 
+module.exports = {
     setupFilesAfterEnv: ['<rootDir>/jest-setup.ts'],
-    testEnvironment: "jsdom" 
- }
+    testEnvironment: "jsdom",
+    preset: "jest-puppeteer"
+}

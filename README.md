@@ -27,3 +27,8 @@ npm run start
 ```
 
 Se estiver tudo certo, abra seu navegador e acesse [http://localhost:8080](http://localhost:8080) para visualizar o projeto.
+
+#Tests
+```
+sudo apt-get install chromium-browser
+```
