@@ -67,6 +67,13 @@ button {
         padding: 4px 10px;
     }
 
+    &__edit {
+        background-color: var(--gray-lighter);
+        color: var(--gray);
+        font-size: 0.7rem;
+        padding: 4px 10px;
+    }
+
     &__add {
         background-color: var(--primary);
         color: white;
@@ -150,6 +157,7 @@ button {
             margin-bottom: 15px;
             display: flex;
             border-bottom: 1px solid var(--gray-lighter);
+            gap: 1rem;
         }
 
         .data {
@@ -176,6 +184,7 @@ button {
                 display: flex;
                 align-items: center;
                 justify-content: flex-end;
+                gap: 1rem;
             }
         }
     }

@@ -4,6 +4,7 @@ import VMasker from "vanilla-masker"
 import { validate } from "./validation"
 import Loading from "../components/loading"
 import { UserInterface } from "../config/types"
+import { formatCPF, formatPhoneNumber } from "./format"
 
 export default class UserInput {
     store = new Store()
@@ -13,6 +14,7 @@ export default class UserInput {
     addButtonEl: HTMLButtonElement
     modalEl: HTMLDivElement
     error: string = ""
+    isUpdate = false
 
     constructor() {
         this.formEl = document.getElementById('user-input')! as HTMLFormElement
@@ -55,11 +57,12 @@ export default class UserInput {
 
         const formData = new FormData(event.target);
         let data: UserInterface = { name: '', cpf: '', phone: '', email: '' };
+
+        // set the new values. If the key equals cpf or phone, remove all the non-number characters
         formData.forEach((value, key) => data[key as keyof UserInterface] = key === 'cpf' || key === 'phone' ? value.toString().replace(/\D/g, "") : value.toString())
 
         if (validate(data) && Object.entries(validate(data)).length > 0) {
             this.formEl.classList.add('was-validated')
-            // this.submitEl.setAttribute('disabled', 'disabled');
             Object.entries(validate(data)).forEach(([key, value]) => {
                 const errorDiv = document.createElement('div')
                 const inputTarget = this.formEl.querySelector(`#${key}`)
@@ -76,10 +79,30 @@ export default class UserInput {
     }
 
     // handler to open/close the modal
-    private modalHandler(event?: Event) {
+    modalHandler(event?: Event, user?: UserInterface) {
+        if (user) {
+            this.isUpdate = true;
+
+            // populate the form values with the selected user to edit
+            Object.entries(user).forEach(([key, value]) => {
+                const targetField = this.formEl.querySelector(`#${key}`);
+                if(key === 'cpf') value = formatCPF(value); // format the CPF value
+                else if(key === 'phone') value = formatPhoneNumber(value); // format the phone number value
+                if (targetField) targetField.setAttribute('value', value); // set the value
+            })
+        }
         event?.preventDefault();
-        if (this.modalEl.classList.contains('active'))
-            this.modalEl.classList.remove('active')
+        const modalTitle = this.isUpdate ? "Alterar usuário" : "Cadastrar novo usuário"
+        const modalSubmitLabel = this.isUpdate ? "Alterar" : "Cadastrar"
+
+        this.modalEl.querySelector('.modal__title')!.textContent = modalTitle // set the modal title
+        this.modalEl.querySelector('.btn__submit')!.textContent = modalSubmitLabel // set the button label
+
+        if (this.modalEl.classList.contains('active')) {
+            this.modalEl.classList.remove('active');
+            this.formEl.reset(); // reset the form on close
+            this.isUpdate = false; // isUpdate will always be false when the modal is closed
+        }
         else
             this.modalEl.classList.add('active')
     }
@@ -88,8 +111,8 @@ export default class UserInput {
     private reset() {
         setTimeout(() => {
             this.submitEl.innerHTML = this.originalSubmitLabel;
-            this.modalHandler();
             this.formEl.reset();
+            this.modalHandler();
             new Home()
         }, 2000)
     }

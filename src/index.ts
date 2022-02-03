@@ -8,6 +8,7 @@ import { formatCPF, formatPhoneNumber } from './helpers/format';
 
 export default class Home {
     store = new Store();
+    userInput = new UserInput();
     requestUrl = 'https://private-847f5-ivangenesis.apiary-mock.com/users'
     users: UserInterface[]
     userListElement: HTMLElement
@@ -23,7 +24,7 @@ export default class Home {
         this.userItemDataColTemplate = document.getElementById('user-item-data-col')! as HTMLTemplateElement
 
         this.init()
-        new UserInput();
+        this.userInput
     }
 
     init() {
@@ -55,8 +56,13 @@ export default class Home {
 
                 importedNode.querySelector('.data__row')?.appendChild(importedColNode)
 
-                if (key === 'cpf')
+                if (key === 'cpf') {
+                    // add event to delete the user by cpf value
                     importedNode.querySelector('.btn__remove')?.addEventListener('click', () => this.store.removeUser(value, () => new Home()))
+
+                    // add event to edit the user by cpf value
+                    importedNode.querySelector('.btn__edit')?.addEventListener('click', (e) => this.edit(e, { name, ...rest }))
+                }
             })
 
             this.userListElement.appendChild(importedNode)
@@ -68,6 +74,11 @@ export default class Home {
         let response = await fetch(this.requestUrl).then(response => response.json()).then(data => data)
         this.store.set(response)
         new Home();
+    }
+
+    private edit(e: Event, user?: UserInterface) {
+        if (!user) return;
+        this.userInput.modalHandler(e, user);
     }
 }
 
