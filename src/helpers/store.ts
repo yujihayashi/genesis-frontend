@@ -10,7 +10,7 @@ export default class Store {
             } catch (error) {
                 this.users = []
             }
-            
+
     }
 
     get() {
@@ -19,11 +19,14 @@ export default class Store {
 
     set(users: UserInterface[]) {
         localStorage.setItem(this.storageKey, JSON.stringify(users))
+        this.users = users;
     }
 
     addUser(user: UserInterface, callback: () => void) {
-        this.users.push(user)
-        this.set(this.users);
+        let newUserList: UserInterface[] = [];
+        if (this.get()) newUserList = JSON.parse(this.get()!)
+        newUserList.push(user)
+        this.set(newUserList);
         callback()
     }
 

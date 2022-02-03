@@ -5,8 +5,8 @@
   "license": "MIT",
   "scripts": {
     "test": "jest --watchAll",
-    "test:unit": "jest specs/unit",
-    "test:e2e": "jest specs/e2e",
+    "test:unit": "jest specs/unit --watchAll",
+    "test:e2e": "jest specs/e2e --detectOpenHandles --watchAll",
     "watch": "webpack --watch",
     "start": "webpack serve --open",
     "build": "webpack"
