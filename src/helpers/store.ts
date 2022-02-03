@@ -25,7 +25,19 @@ export default class Store {
     addUser(user: UserInterface, callback: () => void) {
         let newUserList: UserInterface[] = [];
         if (this.get()) newUserList = JSON.parse(this.get()!)
-        newUserList.push(user)
+        newUserList.push({ ...user, id: (newUserList.length + 1).toString() })
+        this.set(newUserList);
+        callback()
+    }
+
+    editUser(user: UserInterface, callback: () => void) {
+        let newUserList: UserInterface[] = [];
+        if (this.get()) newUserList = JSON.parse(this.get()!)
+        // newUserList.push(user)
+        newUserList = newUserList.map(u => {
+            if (u.id === user.id) return user
+            return u
+        })
         this.set(newUserList);
         callback()
     }

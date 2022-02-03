@@ -1,11 +1,13 @@
-import { UserInterface } from "../config/types";
-import Store from "./store";
+import { FieldInterface, UserInterface } from "../config/types";
 
 
-export function validate(obj: UserInterface) {
+export function validate(obj: UserInterface, fieldsConfig: FieldInterface[]) {
     let validatedObj: { [key: string]: string } = {}
-    Object.entries(obj).forEach(([key, value]) => {
-        if (!value) validatedObj[key] = "Este campo é obrigatório";
+    fieldsConfig.forEach((f) => {
+        const key = f.variable;
+        const value = obj[key as keyof UserInterface];
+
+        if (!value && f.required) validatedObj[key] = "Este campo é obrigatório";
         else {
             if (key === 'name' && validateFullname(value)) validatedObj[key] = validateFullname(value)
             if (key === 'cpf' && validateCPF(value)) validatedObj[key] = validateCPF(value)
@@ -20,8 +22,6 @@ export function validate(obj: UserInterface) {
 export function validateCPF(strCPF: string) {
     const msg = "CPF inválido";
     const numbers = strCPF.split('');
-    const store = new Store;
-    const { users } = store;
     if (strCPF.length < 11) return "CPF deve ter 11 dígitos";
     if (strCPF.length > 11) return "CPF não deve ter mais de 11 dígitos";
     if (numbers.filter(i => i === numbers[0]).length === 11) {
@@ -45,8 +45,6 @@ export function validateCPF(strCPF: string) {
     if ((Resto === 10) || (Resto === 11)) Resto = 0;
     if (Resto !== parseInt(strCPF.substring(10, 11))) return msg;
 
-    // verify if the cpf value alredy exists
-    if (users?.length > 0 && users.find(u => u.cpf === strCPF)) return "CPF já cadastrado"
         return "";
 }
 

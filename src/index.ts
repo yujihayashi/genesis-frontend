@@ -39,6 +39,8 @@ export default class Home {
 
             importedNode.querySelector('h2')!.textContent = name;
             Object.entries(rest).forEach(([key, value]) => {
+                if (key === "id") return; // we wont show the id field
+
                 const importedColNode = document.importNode(this.userItemDataColTemplate.content.firstElementChild!, true)
                 const formattedValue = (): string => {
                     switch (key) {
@@ -50,6 +52,9 @@ export default class Home {
                             return value
                     }
                 }
+
+                if (key === 'phone') key = "Telefone";
+                else if (key === 'email') key = "E-mail";
 
                 importedColNode.querySelector('h3')!.textContent = key;
                 importedColNode.querySelector('p')!.textContent = formattedValue();
@@ -72,6 +77,8 @@ export default class Home {
     async getFromApi() {
         this.userListElement.appendChild(Loading(true))
         let response = await fetch(this.requestUrl).then(response => response.json()).then(data => data)
+        if (response && response.length > 0)
+            response = response.map((r: { [key: string]: string }, i: number) => { return { id: (i + 1).toString(), ...r } })
         this.store.set(response)
         new Home();
     }
