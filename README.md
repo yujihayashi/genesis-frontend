@@ -44,6 +44,10 @@ npm run test:unit
 ```
 
 ## End-to-end test
+
+### There's no need to run the project before
+The project is supposed to be running when we type the command bellow.
+
 ```bash
 yarn test:e2e
 #or
