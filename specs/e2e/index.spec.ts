@@ -108,6 +108,8 @@ describe('Homepage', () => {
 
     it('should be able to create a user', async () => {
         await fillTheForm()
+        
+        await page.waitForSelector('.modal', { visible: false });
 
         // wait for the modal to close
         await page.waitForTimeout(3000);

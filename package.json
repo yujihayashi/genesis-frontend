@@ -4,9 +4,9 @@
   "private": true,
   "license": "MIT",
   "scripts": {
-    "test": "jest --watchAll",
-    "test:unit": "jest specs/unit",
-    "test:e2e": "jest specs/e2e --detectOpenHandles",
+    "test:unit": "jest specs/unit --config=jest.config.unit.ts",
+    "test:unit:w": "jest specs/unit --watchAll --config=jest.config.unit.ts",
+    "test:e2e": "jest specs/e2e --detectOpenHandles --config=jest.config.e2e.ts",
     "watch": "webpack --watch",
     "start": "webpack serve --open",
     "build": "webpack"
