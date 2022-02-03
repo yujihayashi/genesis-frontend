@@ -52,7 +52,6 @@ export function validateCPF(strCPF: string) {
 
 // validate the phone number for brazilian formats (mobile and landline)
 export function validatePhone(value: string) {
-    console.log(value)
     var re = /(.)\1{8}/g;
     var ddd = value.substring(0, 2);
     var firstPhoneNumber = value.substring(2, 3);

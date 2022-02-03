@@ -87,7 +87,6 @@ export default class UserInput {
     // reset the form, close the modal and reload the users list
     private reset() {
         setTimeout(() => {
-            console.log(this.originalSubmitLabel)
             this.submitEl.innerHTML = this.originalSubmitLabel;
             this.modalHandler();
             this.formEl.reset();
@@ -99,7 +98,6 @@ export default class UserInput {
     private inputHandler(masks: string[], max: number, event: Event) {
         var c = event.target as HTMLInputElement;
         var v = c.value.replace(/\D/g, '');
-        console.log(c.value.length, c.value)
         var m = c.value.length > max ? 1 : 0;
         VMasker(c).unMask();
         VMasker(c).maskPattern(masks[m]);
