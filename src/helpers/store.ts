@@ -42,8 +42,8 @@ export default class Store {
         callback()
     }
 
-    removeUser(cpf: string, callback: () => void) {
-        const userIndex = this.users.findIndex(u => u.cpf === cpf)
+    removeUser(id: string, callback: () => void) {
+        const userIndex = this.users.findIndex(u => u.id === id)
         if (userIndex !== -1) {
             this.users.splice(userIndex, 1);
             this.set(this.users)

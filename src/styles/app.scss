@@ -1,7 +1,7 @@
 :root {
     --gray: #333;
     --gray-lighter: #dddcdc;
-    --gray-light: #efeeed;
+    --gray-light: #999;
     --gray-extra-light: #f6f6f6;
     --red: #eb4a46;
     --green: #00c8b3;
@@ -98,6 +98,18 @@ button {
     }
 }
 
+::-webkit-input-placeholder { /* Edge */
+    color: var(--gray-light);
+  }
+  
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: var(--gray-light);
+}
+
+::placeholder {
+    color: var(--gray-light);
+}
+
 .field {
     &__group {
         margin-bottom: 1.5rem;
@@ -111,8 +123,14 @@ button {
     &__input {
         width: 100%;
         border: none;
-        border-bottom: 1px solid #efeeed;
+        border-bottom: 1px solid var(--gray);
         padding: 10px 0;
+        color: var(--gray-light);
+
+        &:focus,
+        &:active {
+            color: var(--gray);
+        }
 
         &:focus {
             outline: none;

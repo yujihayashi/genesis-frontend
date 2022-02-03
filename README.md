@@ -1,16 +1,21 @@
-# Apresentação
+# Presentation
+This is a simple app which you can create, list, edit and exclude users according to the project specifications, BUT I took the liberty to change some things.
 
+- In the style guide, the document said to use the `#efeeed` color for text in the input tags without focusing and the border color. The problem was that the `#efeeed` color barely showed up on the white background. So I changed it to a darker color like `#999`.
+- Instead of creating two pages, I took the liberty of using only one page listing the users and the form used for creating/editing users is inside of a modal.
 
 ## Typescript
-O projeto utiliza o [TypeScript](https://www.typescriptlang.org/) pensando no crescimento, na manutenção e na agilidade do mesmo para desenvolver e validar sem precisar rodar.
-
-## Cypress
+The project has the [TypeScript](https://www.typescriptlang.org/) to making easier on coding, reading and debuging.
 
 ## JEST
+[JEST](https://jestjs.io/) is a userful test framework tool for Javascript. Here we use to run unit and end-to-end tests for the project.
 
-# Instalação e rodando o projeto
+## PUPPETEER
+[Puppeteer](https://pptr.dev/) is a Node library which simulate many things that you can do in the browser like filling all the fields of the form and submit these data or generate screenshot of the page. Here we're using to integrate with JEST and run end-to-end tests.
 
-Primeiramente, utilizando o terminal, instale as dependências:
+# Installing and running the project
+
+First, install the modules:
 
 ```bash
 yarn install
@@ -18,7 +23,7 @@ yarn install
 npm install
 ```
 
-Para rodar o projeto localmente, utilize:
+To run the project locally, execute:
 
 ```bash
 yarn start
@@ -26,7 +31,9 @@ yarn start
 npm run start
 ```
 
-Se estiver tudo certo, abra seu navegador e acesse [http://localhost:8080](http://localhost:8080) para visualizar o projeto.
+If it's allright, open your browser and type [http://localhost:8080](http://localhost:8080) to view the project.
+
+If you need to reset and get the initial values from the api again, just delete the USER_LIST key from the localStorage. So, after that, refresh the page.
 
 # Testing
 ## Unit tests

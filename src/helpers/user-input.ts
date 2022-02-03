@@ -46,18 +46,6 @@ export default class UserInput {
             this.modalEl.addEventListener('mousedown', this.modalHandler.bind(this));
             this.modalEl.querySelector('.modal__close')!.addEventListener('click', this.modalHandler.bind(this));
             this.modalEl.querySelector('.modal__container')!.addEventListener('mousedown', (e) => e.stopPropagation());
-
-            // adding masks to the phone field
-            var telMask = ['(99) 9999-99999', '(99) 99999-9999'];
-            var tel = this.formEl.querySelector('#phone');
-            if (tel) {
-                VMasker(tel).maskPattern(telMask[0]);
-                tel.addEventListener('input', this.inputHandler.bind(undefined, telMask, 14), false);
-            }
-
-            // adding mask to the cpf field
-            var doc = this.formEl.querySelector('#cpf')!;
-            if (doc) VMasker(doc).maskPattern('999.999.999-99');
         }
     }
 
@@ -165,8 +153,21 @@ export default class UserInput {
 
         // clear the formContainer content
         formContainer.innerHTML = "";
-        if (fields && fields.length > 0)
+        if (fields && fields.length > 0) {
             fields.forEach(f => formContainer.appendChild(Field(f)))
+
+            // adding masks to the phone field
+            var telMask = ['(99) 9999-99999', '(99) 99999-9999'];
+            var tel = this.formEl.querySelector('#phone');
+            if (tel) {
+                VMasker(tel).maskPattern(telMask[0]);
+                tel.addEventListener('input', this.inputHandler.bind(undefined, telMask, 14), false);
+            }
+
+            // adding mask to the cpf field
+            var doc = this.formEl.querySelector('#cpf')!;
+            if (doc) VMasker(doc).maskPattern('999.999.999-99');
+        }
     }
 
     private validateDuplicatedUser(cpf: string) {
