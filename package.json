@@ -5,8 +5,8 @@
   "license": "MIT",
   "scripts": {
     "test": "jest --watchAll",
-    "test:unit": "jest specs/unit --watchAll",
-    "test:e2e": "jest specs/e2e --detectOpenHandles --watchAll",
+    "test:unit": "jest specs/unit",
+    "test:e2e": "jest specs/e2e --detectOpenHandles",
     "watch": "webpack --watch",
     "start": "webpack serve --open",
     "build": "webpack"
@@ -26,6 +26,7 @@
     "css-loader": "^6.5.1",
     "html-webpack-plugin": "^5.5.0",
     "jest": "^27.4.7",
+    "jest-dev-server": "^6.0.3",
     "jest-puppeteer": "^6.1.0",
     "node-sass": "^7.0.1",
     "puppeteer": "^13.1.3",

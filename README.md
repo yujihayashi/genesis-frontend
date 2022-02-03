@@ -28,7 +28,19 @@ npm run start
 
 Se estiver tudo certo, abra seu navegador e acesse [http://localhost:8080](http://localhost:8080) para visualizar o projeto.
 
-#Tests
+# Testing
+## Unit tests
+```bash
+yarn test:unit
+#or
+npm run test:unit
 ```
-sudo apt-get install chromium-browser
+
+## End-to-end test
+```bash
+yarn test:e2e
+#or
+npm run test:e2e
 ```
+
+If you have some troubleshooting testing the command test:e2e in Windows + WLS2, try to read this article: [https://chaosandpenguins.com/blog/2021/01/15/troubleshooting-puppeteer-in-wsl2/](https://chaosandpenguins.com/blog/2021/01/15/troubleshooting-puppeteer-in-wsl2/)
