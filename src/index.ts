@@ -1,7 +1,7 @@
 import './styles/app.scss'
-import Store from './helpers/store';
+import Store from './classes/store';
 import Loading from './components/loading';
-import UserInput from './helpers/user-input';
+import UserInput from './classes/user-input';
 import { UserInterface } from './config/types';
 import DataCounter from './components/data-counter';
 import { formatCPF, formatPhoneNumber } from './helpers/format';
@@ -30,7 +30,7 @@ export default class Home {
     init() {
         // reset user list DOM
         this.userListElement.innerHTML = "";
-        this.dataCounterElement.textContent = DataCounter(this.users.length);
+        this.dataCounterElement.innerHTML = DataCounter(this.users.length);
 
         if (!this.store.get()) this.getFromApi()
 

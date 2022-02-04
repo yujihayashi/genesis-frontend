@@ -18,9 +18,25 @@ export function validate(obj: UserInterface, fieldsConfig: FieldInterface[]) {
     return validatedObj;
 }
 
+export function validateField(key: string, value: string) {
+    switch (key) {
+        case 'name':
+            return validateFullname(value)
+        case 'cpf':
+            return validateCPF(value)
+        case 'phone':
+            return validatePhone(value)
+        case 'email':
+            return validateEmail(value)
+        default:
+            return ""
+    }
+}
+
 // validate the cpf value for the brazilian document
 export function validateCPF(strCPF: string) {
     const msg = "CPF inválido";
+    strCPF = strCPF.replace(/\D/g, '')
     const numbers = strCPF.split('');
     if (strCPF.length < 11) return "CPF deve ter 11 dígitos";
     if (strCPF.length > 11) return "CPF não deve ter mais de 11 dígitos";
@@ -45,12 +61,13 @@ export function validateCPF(strCPF: string) {
     if ((Resto === 10) || (Resto === 11)) Resto = 0;
     if (Resto !== parseInt(strCPF.substring(10, 11))) return msg;
 
-        return "";
+    return "";
 }
 
 // validate the phone number for brazilian formats (mobile and landline)
 export function validatePhone(value: string) {
     var re = /(.)\1{8}/g;
+    value = value.replace(/\D/g, '')
     var ddd = value.substring(0, 2);
     var firstPhoneNumber = value.substring(2, 3);
     var expectedLength = firstPhoneNumber === '9' ? 11 : 10;
@@ -73,11 +90,11 @@ export function validatePhone(value: string) {
 export function validateEmail(email: string) {
     const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if (!re.test(String(email).toLowerCase())) return "E-mail inválido";
-    
+
     return "";
 }
 
-function validateFullname(value: string) {
+export function validateFullname(value: string) {
     // split value into words
     const words = value.split(" ");
     if (

@@ -37,6 +37,8 @@ If you need to reset and get the initial values from the api again, just delete 
 
 # Testing
 ## Unit tests
+For this test, we simulate all scenarios for the components.
+
 ```bash
 yarn test:unit
 #or
@@ -44,6 +46,7 @@ npm run test:unit
 ```
 
 ## End-to-end test
+For this one, we test most of the form validations and all the crud actions like create, edit, list and delete users from the app.
 
 ### There's no need to run the project before
 The project is supposed to be running when we type the command bellow.

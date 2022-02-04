@@ -1,12 +1,13 @@
-import Home from "../"
+import Home from ".."
 import Store from "./store"
 import VMasker from "vanilla-masker"
-import { validate } from "./validation"
+import { validate, validateField, validateFullname } from "../helpers/validation"
 import Loading from "../components/loading"
 import { FieldInterface, UserInterface } from "../config/types"
-import { formatCPF, formatPhoneNumber } from "./format"
+import { formatCPF, formatPhoneNumber } from "../helpers/format"
 import userFields from "../config/user-fields"
 import Field from "../components/field"
+import ErrorContainer from "../components/error-container"
 
 export default class UserInput {
     store = new Store()
@@ -54,8 +55,9 @@ export default class UserInput {
         event.preventDefault();
 
         // reset the validations
-        this.submitEl.removeAttribute('disabled');
+        this.submitEl.disabled = false;
         this.formEl.querySelectorAll('.error').forEach(e => e.remove())
+        this.formEl.querySelectorAll<HTMLInputElement>('.field__input').forEach((e) => e.setCustomValidity(""))
         this.formValidation = {}
 
         if (!event || !(event.target instanceof HTMLFormElement)) return;
@@ -79,12 +81,11 @@ export default class UserInput {
 
         if (this.formValidation && Object.entries(this.formValidation).length > 0) {
             this.formEl.classList.add('was-validated')
+            this.submitEl.disabled = true;
             Object.entries(this.formValidation).forEach(([key, value]) => {
-                const errorDiv = document.createElement('div')
-                const inputTarget = this.formEl.querySelector(`#${key}`)
-                errorDiv.classList.add('error')
-                errorDiv.textContent = value;
-                inputTarget?.insertAdjacentElement('afterend', errorDiv)
+                const inputTarget = this.formEl.querySelector<HTMLInputElement>(`#${key}`)
+                inputTarget?.setCustomValidity(value)
+                inputTarget?.insertAdjacentElement('afterend', ErrorContainer(value))
             })
             return
         }
@@ -136,16 +137,6 @@ export default class UserInput {
         }, 2000)
     }
 
-    // if the value length is greater than the max value, unmask and set the second pattern
-    private inputHandler(masks: string[], max: number, event: Event) {
-        var c = event.target as HTMLInputElement;
-        var v = c.value.replace(/\D/g, '');
-        var m = c.value.length > max ? 1 : 0;
-        VMasker(c).unMask();
-        VMasker(c).maskPattern(masks[m]);
-        c.value = VMasker.toPattern(v, masks[m]);
-    }
-
     private renderFields(target: Element) {
         if (!target || !target.querySelector(".form__container")) return;
         const { fields } = this;
@@ -154,20 +145,62 @@ export default class UserInput {
         // clear the formContainer content
         formContainer.innerHTML = "";
         if (fields && fields.length > 0) {
-            fields.forEach(f => formContainer.appendChild(Field(f)))
+            fields.forEach(f => {
+                const fieldElement = Field(f)
+                fieldElement.addEventListener('input', this.handleInput.bind(this))
+                formContainer.appendChild(fieldElement)
+            })
+
 
             // adding masks to the phone field
             var telMask = ['(99) 9999-99999', '(99) 99999-9999'];
             var tel = this.formEl.querySelector('#phone');
             if (tel) {
                 VMasker(tel).maskPattern(telMask[0]);
-                tel.addEventListener('input', this.inputHandler.bind(undefined, telMask, 14), false);
+                tel.addEventListener('input', this.handleMask.bind(undefined, telMask, 14), false);
             }
 
             // adding mask to the cpf field
             var doc = this.formEl.querySelector('#cpf')!;
             if (doc) VMasker(doc).maskPattern('999.999.999-99');
         }
+    }
+
+    // validate on input type
+    private handleInput(event: Event) {
+        if (this.formEl.classList.contains('was-validated')) {
+            const target = event.target as HTMLInputElement
+            const isInvalid = validateField(target.name, target.value)
+
+            // if there is an error with this field, show the error message
+            if (isInvalid) {
+                target?.setCustomValidity(isInvalid)
+                if (!target.nextElementSibling)
+                    target?.insertAdjacentElement('afterend', ErrorContainer(isInvalid))
+                else
+                    target.nextElementSibling.innerHTML = ErrorContainer(isInvalid).innerHTML
+
+            } else {
+                target?.setCustomValidity("")
+                if (target.nextElementSibling)
+                    target.nextElementSibling.remove()
+            }
+
+            // reenable the submit button if all the errors are gone or disable it if there are any errors
+            const errorsCount = this.formEl.querySelectorAll('.error')
+            if(errorsCount.length > 0) this.submitEl.disabled = true;
+            else this.submitEl.disabled = false;
+        }
+    }
+
+    // if the value length is greater than the max value, unmask and set the second pattern
+    private handleMask(masks: string[], max: number, event: Event) {
+        var c = event.target as HTMLInputElement;
+        var v = c.value.replace(/\D/g, '');
+        var m = c.value.length > max ? 1 : 0;
+        VMasker(c).unMask();
+        VMasker(c).maskPattern(masks[m]);
+        c.value = VMasker.toPattern(v, masks[m]);
     }
 
     private validateDuplicatedUser(cpf: string) {
